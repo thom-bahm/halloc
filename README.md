@@ -10,6 +10,6 @@ This project is being built mostly just to learn about dynamic memory allocation
 - [x] first fit and best fit allocation strategies.
 - [x] auto pick strategy based on bytes requested if AUTO strategy is set on initHalloc() call.
 - [x] function to dump information about the heap.
-- [] hrealloc() - simple realloc() replacement
-- [] hcalloc() - simple calloc() replacement
-- []
+- [ ] hrealloc() - simple realloc() replacement
+- [ ] hcalloc() - simple calloc() replacement
+- [ ]
