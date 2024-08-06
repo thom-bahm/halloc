@@ -79,6 +79,18 @@ void dump() {
     printFreeList();
 }
 
+/*
+    halloc's method for allocating the requested memory currently
+    depends on the alocation strategy passed in through initHalloc(). 
+    -1 (AUTO) will use BEST_FIT if the requested size is more than 128 bytes.
+    otherwise FIRST_FIT will be used.
+    0 (FIRST_FIT) defines an allocation strategy
+    that will look for the first possible block in the free list with
+    enough space and use that one. This is quicker, but will likely
+    use more memory than needed for a given block.
+    1 (BEST_FIT) defines an allocation strategy that will look
+    through all possible 
+*/
 void* halloc(size_t size) {
     // if halloc is intialized with AUTO strategy,
     // if size is 512 or more bytes, use best fit
