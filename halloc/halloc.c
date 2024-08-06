@@ -84,8 +84,8 @@ void* halloc(size_t size) {
     // if size is 512 or more bytes, use best fit
     // if size is 64 or less bytes, use first fit
     if (allocStrategy == AUTO) {
-        if (size >= 512) allocStrategy = BEST_FIT;
-        else if (size <= 64) allocStrategy = FIRST_FIT;
+        if (size > 128) allocStrategy = BEST_FIT;
+        else allocStrategy = FIRST_FIT;
     }
     
     // round up to the nearest multiple of 8
