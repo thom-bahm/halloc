@@ -1,5 +1,6 @@
 #include <stdlib.h>
 
+#define AUTO -1
 #define FIRST_FIT 0
 #define BEST_FIT 1
 

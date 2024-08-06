@@ -80,11 +80,20 @@ void dump() {
 }
 
 void* halloc(size_t size) {
+    // if halloc is intialized with AUTO strategy,
+    // if size is 512 or more bytes, use best fit
+    // if size is 64 or less bytes, use first fit
+    if (allocStrategy == AUTO) {
+        if (size >= 512) allocStrategy = BEST_FIT;
+        else if (size <= 64) allocStrategy = FIRST_FIT;
+    }
+    
     // round up to the nearest multiple of 8
     int rem = size % 8;
     size_t alignedSize = size;
     if (rem != 0) alignedSize += (8-rem);
 
+    // size necessary to allocate including header. 
     int totalSize = alignedSize + sizeof(blockHeader);
 
     blockHeader* curr = head;
