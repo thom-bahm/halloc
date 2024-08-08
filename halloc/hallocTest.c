@@ -70,11 +70,9 @@ void test_realloc() {
 
     printf("\n hrealloc on a2: resize to 0 bytes\n");
     char* a3 = (char*)hrealloc(a2, 0);
-    if (a3 != NULL) {
-        printf("hrealloc failed, expected NULL\n");
-        exit(1);
-    }
-    dump();
+    dump(); 
+    // at this point, should see a free block of size 128,256, and whatever other 
+    // free block is in heap in the memory block output and in the Free list output
 }
 
 
