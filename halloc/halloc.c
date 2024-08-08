@@ -186,6 +186,20 @@ void hfree(void *ptr) {
     block->next = curr;
 } 
 
+void *hcalloc(size_t numElem, size_t elemSize) {
+    size_t size;
+    void *ptr;
+    
+    if (numElem == 0 || elemSize == 0) return NULL;
+
+    size = numElem * elemSize;
+    ptr = halloc(size);
+    if (!ptr) return NULL;
+
+    memset(ptr, 0, size);
+    return ptr;
+}
+
 void *hrealloc(void *ptr, size_t new_size) {
     if (ptr == NULL) return halloc(new_size);
     if (new_size == 0) {

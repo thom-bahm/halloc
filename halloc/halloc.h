@@ -6,7 +6,7 @@
 
 void initHalloc(int strategy);
 void *halloc(size_t size);
-void *hcalloc(void *ptr, size_t size);
+void *hcalloc(size_t numElem, size_t elemSize);
 void *hrealloc(void *ptr, size_t new_size);
 
 void hfree(void *ptr);

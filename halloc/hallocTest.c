@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 void test() {
-    printf("\n halloc on a0: char* 128 bytes\n");
+    printf("\nhalloc on a0: char* 128 bytes\n");
     char* a0 = (char*)halloc(128);
     if (a0 == NULL) {
         printf("halloc failed, returned NULL\n");
@@ -16,7 +16,7 @@ void test() {
 }
 
 void test_realloc() {
-    printf("\n halloc on a0: char* 128 bytes\n");
+    printf("\nhalloc on a0: char* 128 bytes\n");
     char* a0 = (char*)halloc(128);
     if (a0 == NULL) {
         printf("halloc failed, returned NULL\n");
@@ -29,7 +29,7 @@ void test_realloc() {
         a0[i] = 'A' + (i % 26);
     }
 
-    printf("\n hrealloc: resize a0 (char* 128 bytes) to 256 bytes\n");
+    printf("\nhrealloc: resize a0 (char* 128 bytes) to 256 bytes\n");
     char* a1 = (char*)hrealloc(a0, 256);
     if (a1 == NULL) {
         printf("hrealloc failed, returned NULL\n");
@@ -48,7 +48,7 @@ void test_realloc() {
     }
     printf("\nNumber of errors after hrealloc on a0: %d\n", errors);
 
-    printf("\n hrealloc on a1 (char* 256 bytes): resize to 64 bytes\n");
+    printf("\nhrealloc on a1 (char* 256 bytes): resize to 64 bytes\n");
     char* a2 = (char*)hrealloc(a1, 64);
     if (a2 == NULL) {
         printf("hrealloc failed, returned NULL\n");
@@ -76,9 +76,34 @@ void test_realloc() {
 }
 
 
+void test_calloc() {
+    printf("\nhcalloc(5,4): Should be 20 bytes allocated to 0. 2nd element (index 1) should be 3.\n");
+    int* arr = (int*) hcalloc(5, 4);
+    arr[1] = 3;
+    for (int i = 0; i < 4; i++) printf("%d\n", arr[i]);
+    dump();
+
+    printf("\nhcalloc(2,32): Should be 64 bytes allocated.\n");
+    short* shortArr = (short*) hcalloc(2,32);
+    for (short i = 0; i < 32; i++) {
+        shortArr[i] = i;
+    }
+    for (int i = 0; i < 32; i++) printf("%d\n", shortArr[i]);
+    dump();
+
+    printf("\nhcalloc(0, 32): Should be 0 additional bytes allocated.\n");
+    hcalloc(0, 32);
+    dump();
+
+    printf("\nhcalloc(2, 0): Should be 0 additional bytes allocated.\n");
+    hcalloc(2, 0);
+    dump();
+
+}
+
 int main(int argc, char* argv[]) {
     printf("\nInit Halloc\n");
     initHalloc(BEST_FIT);
     dump();
-    test_realloc();
+    test_calloc();
 }
