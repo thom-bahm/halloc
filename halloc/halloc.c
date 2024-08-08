@@ -1,5 +1,6 @@
 #include "halloc.h"
 #include <stdio.h>
+#include <string.h>
 #include <sys/mman.h>
 #include <sys/resource.h>
 
@@ -74,7 +75,7 @@ void printFreeList() {
 
 // dump block info and free list
 void dump() {
-    printf("MEM DUMP\n");
+    printf("DUMP\n");
     printBlockInfo();
     printFreeList();
 }
@@ -184,3 +185,22 @@ void hfree(void *ptr) {
     // the freed block should now point to block which was past it
     block->next = curr;
 } 
+
+void *hrealloc(void *ptr, size_t new_size) {
+    if (ptr == NULL) return halloc(new_size);
+    if (new_size == 0) {
+        hfree(ptr);
+        return ptr;
+    }
+
+    blockHeader* block = (blockHeader*) ((unsigned char*) ptr - sizeof(blockHeader));
+    if (!block->allocated) return NULL;
+    if (block->size >= new_size) return ptr;
+
+    void* out = halloc(new_size);
+    if (out){
+        memcpy(out, ptr, block->size);
+        hfree(ptr);
+    }
+    return out;
+}
